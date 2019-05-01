@@ -24,7 +24,7 @@ namespace ARCPMS_ENGINE.src.mrs.Config
             try
             {
                 string apLocation = BasicConfig.GetApplicationLocation();
-                logPath = apLocation + "\\logs\\";
+                logPath =  "C:\\logs\\";
                 string dir = logPath + logFileName + "\\";
 
                 //if dir is not exists, create directory
