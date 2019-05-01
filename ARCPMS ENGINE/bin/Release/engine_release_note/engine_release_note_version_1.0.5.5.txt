@@ -1,0 +1,15 @@
+
+ISSUES
+----------------------------------------------------
+1.
+
+CR
+----------------------------------------------------
+abort transaction in car wash:
+Modified files:
+
+1. QueueControllerImp--ReadWashingTagStatus()
+2. CarWashControllerImp-->ProcessWashPath()
+3. modified needOptimizePath as including optimize slot also
+
+

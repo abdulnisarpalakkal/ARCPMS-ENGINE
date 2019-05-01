@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<root>
+  <Nodes>
+    <Node Name="EES1_North" Active="true" IP="3.0.0.171" />
+    <Node Name="EES1_South" Active="true" IP="3.0.0.172" />
+    <Node Name="EES2_North" Active="false" IP="3.0.0.173" />
+    <Node Name="EES2_South" Active="false" IP="3.0.0.174" />
+    <Node Name="EES3_North" Active="true" IP="3.0.0.175" />
+    <Node Name="EES3_South" Active="true" IP="3.0.0.176" />
+    <Node Name="EES4_North" Active="true" IP="3.0.0.177" />
+    <Node Name="EES4_South" Active="true" IP="3.0.0.178" />
+    <Node Name="EES5_North" Active="true" IP="3.0.0.179" />
+    <Node Name="EES5_South" Active="true" IP="3.0.0.180" />
+    <Node Name="EES6_North" Active="true" IP="3.0.0.181" />
+    <Node Name="EES6_South" Active="true" IP="3.0.0.182" />
+    <Node Name="EES7_North" Active="true" IP="3.0.0.183" />
+    <Node Name="EES7_South" Active="true" IP="3.0.0.184" />
+    <Node Name="EES8_North" Active="true" IP="3.0.0.185" />
+    <Node Name="EES8_South" Active="true" IP="3.0.0.186" />
+    <Node Name="EES9_North" Active="true" IP="3.0.0.187" />
+    <Node Name="EES9_South" Active="true" IP="3.0.0.188" />
+  </Nodes>
+</root>
