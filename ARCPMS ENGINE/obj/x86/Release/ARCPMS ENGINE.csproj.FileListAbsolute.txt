@@ -739,3 +739,41 @@ D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16Jan19\ARCPMS ENGINE\obj\
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16Jan19\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.OperationConfirm.resources
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16Jan19\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Properties.Resources.resources
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16Jan19\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.GenerateResource.Cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.exe.config
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.exe
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.pdb
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csprojAssemblyReference.cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.AuthenticationForm.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Index.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.OperationConfirm.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Properties.Resources.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.GenerateResource.cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.CoreCompileInputs.cache
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.exe.config
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.exe
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.pdb
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\bin\Release\OpcDaNet.dll
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\bin\Release\OpcDaNet.xml
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csprojResolveAssemblyReference.cache
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.AuthenticationForm.resources
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Index.resources
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.OperationConfirm.resources
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Properties.Resources.resources
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.GenerateResource.Cache
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.exe
+C:\EFT ARCPS\Code\new engine\engine 13June19\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.pdb
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csprojAssemblyReference.cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.AuthenticationForm.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Index.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.OperationConfirm.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Properties.Resources.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.GenerateResource.cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.CoreCompileInputs.cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.exe
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.pdb
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.exe.config
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.exe
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.pdb
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\bin\Release\Oracle.DataAccess.dll
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\bin\Release\OpcDaNet.xml
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 16June19\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.CopyComplete

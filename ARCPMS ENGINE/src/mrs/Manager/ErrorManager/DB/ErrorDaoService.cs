@@ -63,5 +63,11 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.ErrorManager.DB
         /// </summary>
         /// <param name="objNotificationData"></param>
         void SaveNotification(NotificationData objNotificationData);
+        /// <summary>
+        /// for removing trigger from machine
+        /// </summary>
+        /// <param name="machineCode"></param>
+        /// <returns></returns>
+        bool RemoveTrigger(string machineCode);
     }
 }

@@ -1042,7 +1042,7 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
                     objPSData.command = OpcTags.PS_L2_PST_GetCmd;
                     objErrorData = ConvertPSDataToErrorData(objPSData);
                     objErrorControllerService.UpdateLiveCommandOfMachine(objErrorData);
-                    success = objPSControllerService.PSPutToPST(objPSData, objPSTData);
+                    success = objPSControllerService.PSGetFromPST(objPSData, objPSTData);
                     success = success && objPSControllerService.CheckPSCommandDone(objPSData, objPSTData,null);
                 }
 

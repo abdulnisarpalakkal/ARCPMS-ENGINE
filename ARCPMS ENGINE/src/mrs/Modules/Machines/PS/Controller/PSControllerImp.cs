@@ -42,7 +42,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
             return objPSDaoService.GetPSDetailsIncludeAisle(aisle);
         }
 
-        public bool UpdateMachineValues()
+        public override bool UpdateMachineValues()
         {
             objPSDaoService = new PSDaoImp();
             List<Model.PSData> psList;
@@ -87,7 +87,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
         }
 
 
-        public bool AsynchReadSettings()
+        public override bool AsynchReadSettings()
         {
             // add a periodic data callback group and add one item to the group
             OPCDA.NET.RefreshEventHandler dch = new OPCDA.NET.RefreshEventHandler(AsynchReadListenerForPS);
@@ -127,7 +127,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
 
 
 
-        public bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
+        public override bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
         {
             string field = "";
             bool boolDataValue;
@@ -159,7 +159,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
         }
 
 
-        public void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
+        public override void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
         {
             isRem = false;
             tableField = "";
@@ -306,20 +306,21 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
         public bool PSGetFromPST(Model.PSData objPSData, PSTData objPSTData)
         {
             //Logger.WriteLogger(GlobalValues.PMS_LOG, "Entering PSGetFromPST: " + objPSData.machineCode + " >> dest_aisle: " + objPSData.destAisle);
-            bool isPSHealthy = false;
+            bool isTrigger = false;
             bool success = false;
             bool isPathClear = false;
             int checkCount = 0;
             int setAisle = 0;
-
+            if (objPSTControllerService == null)
+                objPSTControllerService = new PSTControllerImp();
             //do
             //{
             try
             {
 
-                isPSHealthy = CheckPSHealthy(objPSData);
+                isTrigger = ShowTrigger(objPSData) || objPSTControllerService.ShowTrigger(objPSTData);
 
-                if (!isPSHealthy) return false;
+                if (isTrigger) return false;
 
                 using (OpcOperationsService opcd = new OpcOperationsImp(OpcConnection.GetOPCServerConnection()))
                 {
@@ -512,7 +513,8 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
             int error = 0;
             if (objPSTControllerService == null) 
                 objPSTControllerService = new PSTControllerImp();
-
+            if (objEESControllerService == null)
+                objEESControllerService = new EESControllerImp();
             try
             {
                 opcd = new OpcOperationsImp(OpcConnection.GetOPCServerConnection());
@@ -526,13 +528,21 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
                 
                 do
                 {
-                    if (ShowTrigger(objPSData) || objPSTControllerService.ShowTrigger(objPSTData) || objEESControllerService.ShowTrigger(objEESData))
+                    if (ShowTrigger(objPSData) )
                     {
 
                         while (objErrorControllerService.GetTriggerActiveStatus(objPSData.machineCode))
                         {
                             Thread.Sleep(1000);
                         }
+                        //while (objPSTData!=null && objErrorControllerService.GetTriggerActiveStatus(objPSTData.machineCode))
+                        //{
+                        //    Thread.Sleep(1000);
+                        //}
+                        //while (objEESData != null && objErrorControllerService.GetTriggerActiveStatus(objEESData.machineCode))
+                        //{
+                        //    Thread.Sleep(1000);
+                        //}
                         if (objErrorControllerService.GetTriggerAction(objPSData.machineCode) == 1)
                         {
                             DoTriggerAction(objPSData,objPSTData,objEESData,commandType);
@@ -567,21 +577,25 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
         {
             if (objPSData == null)
                 return false;
-            if (objErrorDaoService == null)
-                objErrorDaoService = new ErrorDaoImp();
+            bool needToShowTrigger = false;
+           
             if (objErrorControllerService == null)
                 objErrorControllerService = new ErrorControllerImp();
+            if (objErrorDaoService == null)
+                objErrorDaoService = new ErrorDaoImp();
 
             int error = objErrorControllerService.GetErrorCode(objPSData.machineChannel, objPSData.machineCode, OpcTags.PS_L2_Error_Data_Register);
             if (error != 0)
-                return false;
-            TriggerData objTriggerData = new TriggerData();
-            objTriggerData.MachineCode = objPSData.machineCode;
-            objTriggerData.category = TriggerData.triggerCategory.ERROR;
-            objTriggerData.ErrorCode = error.ToString();
-            objTriggerData.TriggerEnabled = true;
-            objErrorDaoService.UpdateTriggerActiveStatus(objTriggerData);
-            return true;
+            {
+                needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.ERROR, error.ToString(), objPSData.machineCode));
+            }
+            else if (!CheckPSHealthy(objPSData))
+            {
+                needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.TRIGGER, "", objPSData.machineCode));
+            }
+            return needToShowTrigger;
+
+            
         }
         public bool ClearPathForPS(Model.PSData objPSData)
         {

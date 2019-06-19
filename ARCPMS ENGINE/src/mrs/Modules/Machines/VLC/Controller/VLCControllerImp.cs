@@ -30,7 +30,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
         ErrorDaoService objErrorDaoService = null;
         QueueControllerService objQueueControllerService = null;
 
-        public bool UpdateMachineValues()
+        public override bool UpdateMachineValues()
         {
             objVLCDaoService = new VLCDaoImp();
             List<VLCData> vlcList;
@@ -70,7 +70,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
         }
 
 
-        public bool AsynchReadSettings()
+        public override bool AsynchReadSettings()
         {
             // add a periodic data callback group and add one item to the group
             OPCDA.NET.RefreshEventHandler dch = new OPCDA.NET.RefreshEventHandler(AsynchReadListenerForVLC);
@@ -106,7 +106,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
         }
 
 
-        public bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
+        public override bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
         {
             string field = "";
             bool boolDataValue;
@@ -137,7 +137,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
             return true;
         }
 
-        public void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
+        public override void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
         {
             isRem = false;
             tableField = "";
@@ -544,8 +544,8 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
                       errorCode = objErrorControllerService.GetErrorCode(objVLCData.machineChannel, objVLCData.machineCode, OpcTags.VLC_L2_ErrCode) ;
                         if (errorCode>0 )
                         {
-                            objTriggerData.category = TriggerData.triggerCategory.ERROR;
-                            objTriggerData.ErrorCode = errorCode.ToString();
+                            objTriggerData = GetTriggerData(TriggerData.triggerCategory.ERROR, errorCode.ToString(), objVLCData.machineCode);
+                           
                             needToShow = true;
                             break;
                         }
@@ -555,7 +555,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
                         {
                             if (checkCount >= max_check_count)
                             {
-                                objTriggerData.category = TriggerData.triggerCategory.MANUAL;
+                                objTriggerData = GetTriggerData(TriggerData.triggerCategory.MANUAL, "", objVLCData.machineCode);
                                 break;
                             }
                             checkCount++;
@@ -566,7 +566,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
                         needToShow =  objVLCDaoService.IsVLCDisabled(objVLCData.machineCode);
                         if (needToShow)
                         {
-                            objTriggerData.category = TriggerData.triggerCategory.DISABLE;
+                            objTriggerData = GetTriggerData(TriggerData.triggerCategory.DISABLE, "", objVLCData.machineCode);
                             break;
                         }
                        
@@ -575,8 +575,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.VLC.Controller
             }
             if (needToShow)
             {
-                objTriggerData.MachineCode = objVLCData.machineCode;
-                objTriggerData.TriggerEnabled = true;
+              
                 Logger.WriteLogger(GlobalValues.PARKING_LOG, "Queue Id:" + objVLCData.queueId + ": VLC = " + objVLCData.machineCode + "--'NeedToShowTrigger For VLC' = " + needToShow);
             }
             return objTriggerData;

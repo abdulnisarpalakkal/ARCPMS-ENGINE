@@ -788,7 +788,7 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.ParkingManager.Controller
                                         if (ParkConfig.IsAutoRefreshActive(objQueueData.requestType))
                                         {
                                             autoRefreshCnt++;
-                                            if (autoRefreshCnt > (pmsMode == 1 ? (autoRefreshLmt + 10) : autoRefreshLmt) )
+                                            if (autoRefreshCnt > (pmsMode == 1 ? (autoRefreshLmt + 40) : autoRefreshLmt) )
                                             {
                                                 Logger.WriteLogger(GlobalValues.PARKING_LOG, "Queue Id:" + objCMData.queueId
                                                         + ": CM=" + objCMData.machineCode + " auto refresh in 'ExcecuteCommands' waiting ees ready");

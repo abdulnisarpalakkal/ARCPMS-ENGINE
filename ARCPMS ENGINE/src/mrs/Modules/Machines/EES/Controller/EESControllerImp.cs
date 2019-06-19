@@ -298,7 +298,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.EES.Controller
             return objEESDaoService.UpdateMachineBlockStatusForPMS(machine_code, blockStatus);
         }
 
-        public bool UpdateMachineValues()
+        public override bool UpdateMachineValues()
         {
             objEESDaoService = new EESDaoImp();
             List<EESData> eesList;
@@ -407,7 +407,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.EES.Controller
             {
             }
         }
-        public bool AsynchReadSettings()
+        public override bool AsynchReadSettings()
         {
             // add a periodic data callback group and add one item to the group
             OPCDA.NET.RefreshEventHandler dch = new OPCDA.NET.RefreshEventHandler(AsynchReadListenerForEES);
@@ -454,7 +454,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.EES.Controller
         }
 
 
-        public void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
+        public override void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
         {
             isRem = false;
             tableField = "";
@@ -570,7 +570,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.EES.Controller
         }
 
 
-        public bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
+        public override bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
         {
             string field = "";
             bool boolDataValue;
@@ -1014,6 +1014,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.EES.Controller
         {
             if (objEESData == null)
                 return false;
+            bool needToShowTrigger = false;
             if (objErrorDaoService == null)
                 objErrorDaoService = new ErrorDaoImp();
             if (objErrorControllerService == null)
@@ -1021,14 +1022,16 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.EES.Controller
 
             int error = objErrorControllerService.GetErrorCode(objEESData.machineChannel, objEESData.machineCode, OpcTags.EES_L2_ErrCode);
             if (error != 0)
-                return false;
-            TriggerData objTriggerData = new TriggerData();
-            objTriggerData.MachineCode = objEESData.machineCode;
-            objTriggerData.category = TriggerData.triggerCategory.ERROR;
-            objTriggerData.ErrorCode = error.ToString();
-            objTriggerData.TriggerEnabled = true;
-            objErrorDaoService.UpdateTriggerActiveStatus(objTriggerData);
-            return true;
+            {
+                needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.ERROR, error.ToString(), objEESData.machineCode));
+            }
+            else if (!CheckEESHealthy(objEESData))
+            {
+                needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.TRIGGER, "", objEESData.machineCode));
+            }
+            if (!needToShowTrigger)
+                objErrorDaoService.RemoveTrigger(objEESData.machineCode);
+            return needToShowTrigger;
         }
     }
 }

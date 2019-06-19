@@ -158,6 +158,33 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.ErrorManager.DB
             }
             return bOk;
         }
+        public bool RemoveTrigger(string machineCode)
+        {
+            bool bOk = false;
+            try
+            {
+                using (OracleConnection con = new DBConnection().getDBConnection())
+                {
+
+                    OracleCommand command = con.CreateCommand();
+                    string sql = "update L2_TRIGGER_COMMANDS set is_trigger ='0'"
+                            + ",TRIGGER_TYPE =''"
+                            + ",N_VALUE =''"
+                            + " where MACHINE = '" + machineCode
+                            + "' and is_trigger!='0'";
+                    command.CommandText = sql;
+                    command.CommandType = CommandType.Text;
+                    command.ExecuteNonQuery();
+
+                    bOk = true;
+                }
+            }
+            finally
+            {
+
+            }
+            return bOk;
+        }
 
         public bool GetTriggerActiveStatus(string machine)
         {

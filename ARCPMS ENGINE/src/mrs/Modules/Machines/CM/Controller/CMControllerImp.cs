@@ -50,7 +50,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
             if (objCMDaoService == null) objCMDaoService = new CMDaoImp();
             return objCMDaoService.GetCMList();
         }
-        public bool UpdateMachineValues()
+        public override bool UpdateMachineValues()
         {
             if (objCMDaoService==null) objCMDaoService = new CMDaoImp();
             List<CMData> cmList;
@@ -1885,8 +1885,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
                         errorCode = GetError(objCMData);
                         if (errorCode!=0)
                         {
-                            objTriggerData.category = TriggerData.triggerCategory.ERROR;
-                            objTriggerData.ErrorCode = errorCode.ToString();
+                            objTriggerData = GetTriggerData(TriggerData.triggerCategory.ERROR, errorCode.ToString(), objCMData.machineCode);
                             needToShow = true;
                             break;
                         }
@@ -1901,7 +1900,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
                         {
                             if (checkCount >= check_max_count)
                             {
-                                objTriggerData.category = TriggerData.triggerCategory.MANUAL;
+                                objTriggerData = GetTriggerData(TriggerData.triggerCategory.MANUAL, "", objCMData.machineCode);
                                 break;
                             }
                             checkCount++;
@@ -1912,7 +1911,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
                         needToShow =objCMDaoService.IsCMDisabled(objCMData.machineCode);
                         if (needToShow )
                         {
-                            objTriggerData.category = TriggerData.triggerCategory.DISABLE;
+                            objTriggerData = GetTriggerData(TriggerData.triggerCategory.DISABLE, "", objCMData.machineCode);
                             break;
                         }
 
@@ -1930,7 +1929,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
 
                         if (needToShow )
                         {
-                            objTriggerData.category = TriggerData.triggerCategory.WAITING;
+                            objTriggerData = GetTriggerData(TriggerData.triggerCategory.WAITING, "", objCMData.machineCode);
                             break;
                         }
 
@@ -1939,8 +1938,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
                             needToShow = opcd.ReadTag<bool>(objCMData.cmChannel, objCMData.machineCode, OpcTags.LCM_L2_CM_IN_ROTATION);
                             if (needToShow)
                             {
-                                objTriggerData.category = TriggerData.triggerCategory.ERROR;
-                                objTriggerData.ErrorCode = "TT";
+                                objTriggerData = GetTriggerData(TriggerData.triggerCategory.ERROR, "TT", objCMData.machineCode);
                                 break;
                             }
                         }
@@ -1949,8 +1947,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
             }
             if (needToShow)
             {
-                objTriggerData.MachineCode = objCMData.machineCode;
-                objTriggerData.TriggerEnabled = true;
+              
                 Logger.WriteLogger(GlobalValues.PARKING_LOG, "Queue Id:" + objCMData.queueId + ": CM = " + objCMData.machineCode + "--'NeedToShowTrigger' = " + needToShow);
             }
             return objTriggerData;
@@ -2051,7 +2048,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
             return objCMDaoService.UpdateMachineBlockStatusForHome(machine_code, blockStatus);
         }
         
-        public bool AsynchReadSettings()
+        public override bool AsynchReadSettings()
         {
             // add a periodic data callback group and add one item to the group
             OPCDA.NET.RefreshEventHandler dch = new OPCDA.NET.RefreshEventHandler(AsynchReadListenerForCM);
@@ -2159,7 +2156,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
        
     
 
-        public void  GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField,out bool isRem)
+        public override void  GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField,out bool isRem)
         {
             isRem=false;
             tableField="";
@@ -2307,7 +2304,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
         }
         
 
-        public bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, Object dataValue)
+        public override bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, Object dataValue)
         {
             string field = "";
             bool boolDataValue;

@@ -41,13 +41,13 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PST.Controller
             return objPSTDaoService.GetPSTDetailsInRange(minAisle,maxAisle);
         }
        
-
+        override
         public bool UpdateMachineValues()
         {
             throw new NotImplementedException();
         }
 
-
+        override
         public bool AsynchReadSettings()
         {
             throw new NotImplementedException();
@@ -132,12 +132,13 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PST.Controller
             throw new NotImplementedException();
         }
 
-
+        override
         public bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
         {
             throw new NotImplementedException();
         }
 
+        override
         public void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
         {
             throw new NotImplementedException();
@@ -196,6 +197,7 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PST.Controller
         {
             if (objPSTData == null)
                 return false;
+            bool needToShowTrigger = false;
             if (objErrorDaoService == null)
                 objErrorDaoService = new ErrorDaoImp();
             if (objErrorControllerService == null)
@@ -203,14 +205,17 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PST.Controller
 
             int error = objErrorControllerService.GetErrorCode(objPSTData.machineChannel, objPSTData.machineCode, OpcTags.PST_L2_ErrCode);
             if (error != 0)
-                return false;
-            TriggerData objTriggerData = new TriggerData();
-            objTriggerData.MachineCode = objPSTData.machineCode;
-            objTriggerData.category = TriggerData.triggerCategory.ERROR;
-            objTriggerData.ErrorCode = error.ToString();
-            objTriggerData.TriggerEnabled = true;
-            objErrorDaoService.UpdateTriggerActiveStatus(objTriggerData);
-            return true;
+            {
+                needToShowTrigger=objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.ERROR, error.ToString(), objPSTData.machineCode));
+            }
+            else if (!CheckPSTHealthy(objPSTData))
+            {
+                needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.TRIGGER, "", objPSTData.machineCode));
+            }
+            if (!needToShowTrigger)
+                objErrorDaoService.RemoveTrigger(objPSTData.machineCode);
+            return needToShowTrigger;
         }
+        
     }
 }

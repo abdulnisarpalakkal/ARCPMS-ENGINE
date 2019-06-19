@@ -34,13 +34,13 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PVL.Controller
             if (objPVLDaoService == null) objPVLDaoService = new PVLDaoImp();
             return objPVLDaoService.GetPVLDetails(objPVLData);
         }
-        public bool UpdateMachineValues()
+        public override bool UpdateMachineValues()
         {
             throw new NotImplementedException();
         }
 
 
-        public bool AsynchReadSettings()
+        public override bool AsynchReadSettings()
         {
             throw new NotImplementedException();
         }
@@ -216,14 +216,9 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PVL.Controller
                     error=objErrorControllerService.GetErrorCode(objPVLData.machineChannel, objPVLData.machineCode, OpcTags.PVL_L2_ErrCode) ;
                     if (error > 0)
                     {
-                        TriggerData objTriggerData = new TriggerData();
-                        objTriggerData.MachineCode = objPVLData.machineCode;
-                        objTriggerData.category = TriggerData.triggerCategory.ERROR;
-                        objTriggerData.ErrorCode = error.ToString();
-                        objTriggerData.TriggerEnabled = true;
-                        objErrorDaoService.UpdateTriggerActiveStatus(objTriggerData);
-
-
+                       
+                        objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.ERROR, error.ToString(), objPVLData.machineCode));
+                        
                         while (objErrorControllerService.GetTriggerActiveStatus(objPVLData.machineCode))
                         {
 
@@ -333,12 +328,12 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PVL.Controller
         }
 
 
-        public bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
+        public override bool UpdateMachineTagValueToDBFromListener(string machineCode, string machineTag, object dataValue)
         {
             throw new NotImplementedException();
         }
 
-        public void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
+        public override void GetDataTypeAndFieldOfTag(string opcTag, out int dataType, out string tableField, out bool isRem)
         {
             throw new NotImplementedException();
         }
