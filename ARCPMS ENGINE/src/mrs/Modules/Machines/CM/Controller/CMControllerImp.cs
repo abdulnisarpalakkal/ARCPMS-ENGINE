@@ -1933,10 +1933,10 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.CM.Controller
                             break;
                         }
 
-                        if (objCMData.machineCode.Contains("LCM"))
+                        if (objCMData.machineCode.Contains("LCM") && objCMData.command != OpcTags.LCM_L2_TT_ROT)
                         {
                             needToShow = opcd.ReadTag<bool>(objCMData.cmChannel, objCMData.machineCode, OpcTags.LCM_L2_CM_IN_ROTATION);
-                            if (needToShow)
+                            if (needToShow )
                             {
                                 objTriggerData = GetTriggerData(TriggerData.triggerCategory.ERROR, "TT", objCMData.machineCode);
                                 break;

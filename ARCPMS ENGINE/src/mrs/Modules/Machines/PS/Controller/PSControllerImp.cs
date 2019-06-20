@@ -240,21 +240,22 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
         public bool PSGetFromEES(Model.PSData objPSData, EESData objEESData)
         {
             //Logger.WriteLogger(GlobalValues.PMS_LOG, "Entering PSGetFromEES: " + objPSData.machineCode + " >> dest_aisle: " + objPSData.destAisle);
-            bool isPSHealthy = false;
+            bool isTrigger = false;
             bool success = false;
             bool isPathClear = false;
             int checkCount = 0;
             int setAisle = 0;
-
+            if (objEESControllerService == null)
+                objEESControllerService = new EESControllerImp();
 
           //  do
           //  {
             try
             {
 
-                isPSHealthy = CheckPSHealthy(objPSData);
+                isTrigger = ShowTrigger(objPSData) || objEESControllerService.ShowTrigger(objEESData);
 
-                if (!isPSHealthy) return false;
+                if (isTrigger) return false;
 
                 using (OpcOperationsService opcd = new OpcOperationsImp(OpcConnection.GetOPCServerConnection()))
                 {
@@ -372,20 +373,22 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
         public bool PSPutToEES(Model.PSData objPSData, EESData objEESData)
         {
             //Logger.WriteLogger(GlobalValues.PMS_LOG, "Entering PSPutToEES: " + objPSData.machineCode + " >> dest_aisle: " + objPSData.destAisle);
-            bool isPSHealthy = false;
+           
             bool success = false;
             bool isPathClear = false;
             int checkCount = 0;
             int setAisle = 0;
-
+            bool isTrigger = false;
+            if(objEESControllerService==null)
+                objEESControllerService=new EESControllerImp();
             //do
             //{
             try
             {
 
-                isPSHealthy = CheckPSHealthy(objPSData);
+                isTrigger = ShowTrigger(objPSData) || objEESControllerService.ShowTrigger(objEESData);
 
-                if (!isPSHealthy) return false;
+                if (isTrigger) return false;
 
 
 
@@ -439,20 +442,21 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.PS.Controller
         public bool PSPutToPST(Model.PSData objPSData, PSTData objPSTData)
         {
             //Logger.WriteLogger(GlobalValues.PMS_LOG, "Entering PSPutToPST: " + objPSData.machineCode + " >> dest_aisle: " + objPSData.destAisle);
-            bool isPSHealthy = false;
+            bool isTrigger = false;
             bool success = false;
             bool isPathClear = false;
             int checkCount = 0;
             int setAisle = 0;
-
+            if (objPSTControllerService == null)
+                objPSTControllerService = new PSTControllerImp();
             //do
             //{
             try
             {
 
-                isPSHealthy = CheckPSHealthy(objPSData);
+                isTrigger = ShowTrigger(objPSData) || objPSTControllerService.ShowTrigger(objPSTData);
 
-                if (!isPSHealthy) return false;
+                if (isTrigger) return false;
 
                 using (OpcOperationsService opcd = new OpcOperationsImp(OpcConnection.GetOPCServerConnection()))
                 {

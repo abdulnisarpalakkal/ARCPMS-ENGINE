@@ -7,6 +7,7 @@ using ARCPMS_ENGINE.src.mrs.Global;
 using OPCDA;
 using OPCDA.NET;
 using OPC;
+using ARCPMS_ENGINE.src.mrs.Config;
 
 namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
 {
@@ -25,6 +26,7 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
         static object lockOpcServer = new object();
         static object lockCamOpcServer = new object();
         static object opcConLock = new object();
+        static SERVERSTATUS objSERVERSTATUS = new SERVERSTATUS();
 
         // public OpcServer opcServer { get; set; }
 
@@ -62,14 +64,15 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
             finally { }
             return opcServer.isConnectedDA;
         }
-        public static OpcServer GetOPCServerConnection()
+        public static OpcServer GetOPCServerConnection(bool renewLease=false)
         {
 
 
-            if (opcServer == null) opcServer = new OpcServer();
+            if (opcServer == null || renewLease) 
+                opcServer = new OpcServer();
 
             int rtc = 0;
-            SERVERSTATUS objSERVERSTATUS = new SERVERSTATUS();
+            
             bool isConnected = false;
             bool isServerRunning = true;
 
@@ -103,8 +106,8 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
                     }
                     catch (Exception errMsg)
                     {
-                        Console.WriteLine("" + errMsg.Message);
-
+                        
+                        Logger.WriteLogger(GlobalValues.PARKING_LOG, "GetOPCServerConnection(catch) : errMsg = " + errMsg);
                     }
                     finally { }
 

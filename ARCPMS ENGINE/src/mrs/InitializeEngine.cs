@@ -406,7 +406,7 @@ namespace ARCPMS_ENGINE.src.mrs
         }
         public void ReinitializeOpc()
         {
-            //OpcConnection.StopOPCServer();
+            OpcConnection.GetOPCServerConnection(true);
             AsynchReadSettings();
         }
         public bool testAsynchReadSettings()
