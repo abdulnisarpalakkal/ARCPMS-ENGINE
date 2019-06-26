@@ -189,7 +189,7 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
             bool isPalletPresent=false;
             bool needToFeedPallet = false;
             bool needToRemovePallet = false;
-            bool isEESHealthy = false;
+            bool needToShowTriggr = false;
             bool hasCarAtEES=false;
            
             
@@ -200,9 +200,10 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
 
                     foreach (EESData objEESData in scanningEESList)
                     {
-                        isEESHealthy = objEESControllerService.CheckEESHealthy(objEESData);
+                        needToShowTriggr = objEESControllerService.ShowTrigger(objEESData);
+
                         hasCarAtEES = objEESControllerService.checkCarAtEES(objEESData);
-                        if (!objPalletDaoService.IsPMSInL2() || !isEESHealthy ||  hasCarAtEES)
+                        if (!objPalletDaoService.IsPMSInL2() || needToShowTriggr ||  hasCarAtEES)
                         {
                             Thread.Sleep(100);
                             ResetPriority(objEESData);
@@ -226,14 +227,14 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
                             continue;
                         }
 
-                        if (objEESData.psCode == null)
+                        if (objEESData.psCode == null) //new request
                         {
                             InitiatePriority(objEESData);
                         }
 
 
                         EESData objRefEESData = new EESData();
-                        objRefEESData = BasicConfig.Clone<EESData>(objEESData);
+                        objRefEESData = BasicConfig.Clone<EESData>(objEESData); //avoiding same object reference in other functions
                         if (needToFeedPallet)
                             Task.Factory.StartNew(() => PutEESByPS(new PSData(), objRefEESData));
                         else if (needToRemovePallet)
@@ -460,7 +461,7 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
                         entryEESWithoutPallet = 0;
                         exitEESWithPallet = 0;
                         
-                        if (!objPalletDaoService.IsPMSInL2() || !objPSTControllerService.CheckPSTHealthy(objPSTData))
+                        if (!objPalletDaoService.IsPMSInL2() || objPSTControllerService.ShowTrigger(objPSTData))
                         {
                             Thread.Sleep(100);
                             continue;

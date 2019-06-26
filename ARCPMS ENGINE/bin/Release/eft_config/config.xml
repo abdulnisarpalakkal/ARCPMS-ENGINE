@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <appSettings>
   <DiagnosticImagePath>C:\ARCPSIMAGES\</DiagnosticImagePath>
-  <EntryKioskXmlPath>E:\Kiosks\</EntryKioskXmlPath>
+  <EntryKioskXmlPath>D:\Projects\MRS\EFT\xml</EntryKioskXmlPath>
   <ExitKioskXmlPath>E:\Temp\RR\</ExitKioskXmlPath>
   <BackupkXmlPath>C:\Temp\BB\</BackupkXmlPath>
   <DisplayXmlPath>C:\inetpub\wwwroot\Data\Data.xml</DisplayXmlPath>
@@ -9,12 +9,12 @@
   <CarWashEstTimePath>C:\EFT V2\EFT_Web\EstCarwashTime.xml</CarWashEstTimePath>
   <ReportPath>
   </ReportPath>
-  <opcMachineHost>hpiserver</opcMachineHost>
-  <opcServerName>Intellution.IntellutionGatewayOPCServer</opcServerName>
+  <opcMachineHost>localhost</opcMachineHost>
+  <opcServerName>Matrikon.OPC.Simulation.1</opcServerName>
   <CamHostServer>3.0.0.200</CamHostServer>
   <CamOpcServerName>CameraOPCSvr</CamOpcServerName>
-  <connectionString>Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=3.0.0.200)(PORT=1521))(CONNECT_DATA=(SID=orcl)));User Id=l2rpmsadmin;Password=fclrpms456;</connectionString>
-  <userConnectionString>Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=3.0.0.200)(PORT=1521))(CONNECT_DATA=(SID=orcl)));User Id=l2rpmsadmin;Password=fclrpms456;</userConnectionString>
+  <connectionString>Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SID=orcl)));User Id=l2rpmsadmin;Password=fclrpms456;</connectionString>
+  <userConnectionString>Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SID=orcl)));User Id=l2rpmsadmin;Password=fclrpms456;</userConnectionString>
   <LogDir>D:\Nizar\PROJECTS\Ibn Battuta\arpmsLog\</LogDir>
   <ImagePath>C:\EFT ARCPS\Camera Images</ImagePath>
   <AutoRefresh>true</AutoRefresh>
