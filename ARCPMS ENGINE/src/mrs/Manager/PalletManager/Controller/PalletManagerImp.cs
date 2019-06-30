@@ -213,7 +213,9 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
                         if (PMS_MODE == 3)
                             isEntry = objEESControllerService.IsEESEntryInOPC(objEESData);
                         else
-                            isEntry=objEESControllerService.IsEESEntryInCurrentModeInDB(objEESData.machineCode);
+                            isEntry = objEESControllerService.IsEESEntryInOPC(objEESData);
+                            //issue when any transaction selected gate in morning mode. pallet is not getting removed
+                           // isEntry=objEESControllerService.IsEESEntryInCurrentModeInDB(objEESData.machineCode);
                         
                         isPalletPresent = objEESControllerService.IsPalletPresentOnEES(objEESData);
 

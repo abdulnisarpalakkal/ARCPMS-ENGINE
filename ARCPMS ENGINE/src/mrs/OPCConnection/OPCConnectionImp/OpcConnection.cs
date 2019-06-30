@@ -17,7 +17,7 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
         static string opcMachineHost;
         static string opcServerName = null;
         //static OpcThread SrvAccess = null;
-        static OpcServer opcServer = null;
+        static volatile OpcServer opcServer = null;
 
         static string camOPCMachineHost;
         static string camOPCServerName;
@@ -64,23 +64,38 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
             finally { }
             return opcServer.isConnectedDA;
         }
-        public static OpcServer GetOPCServerConnection(bool renewLease=false)
+
+        public static OpcServer GetOPCServerConnection(bool renewLease = false)
         {
+            try
+            {
+                if (!renewLease && opcServer != null && opcServer.isConnectedDA)
+                {
+                    opcServer.GetStatus(out objSERVERSTATUS);
+                    if (objSERVERSTATUS.eServerState == OpcServerState.Running)
+                        return opcServer;
+                }
+            }
+            catch(Exception errMsg)
+            {
+                Logger.WriteLogger(GlobalValues.PARKING_LOG, "GetOPCServerConnection(catch 1) : errMsg = " + errMsg);
+            }
 
 
-            if (opcServer == null || renewLease) 
-                opcServer = new OpcServer();
+          
 
             int rtc = 0;
-            
+
             bool isConnected = false;
             bool isServerRunning = true;
 
             lock (opcConLock)
             {
-
+                
                 do
                 {
+                    if (renewLease || opcServer == null)
+                        opcServer = new OpcServer();
                     try
                     {
                         isConnected = opcServer.isConnectedDA;
@@ -106,8 +121,8 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
                     }
                     catch (Exception errMsg)
                     {
-                        
-                        Logger.WriteLogger(GlobalValues.PARKING_LOG, "GetOPCServerConnection(catch) : errMsg = " + errMsg);
+
+                        Logger.WriteLogger(GlobalValues.PARKING_LOG, "GetOPCServerConnection(catch 2) : errMsg = " + errMsg);
                     }
                     finally { }
 
@@ -121,6 +136,63 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
 
 
         }
+        //public static OpcServer GetOPCServerConnection(bool renewLease=false)
+        //{
+
+
+        //    if (opcServer == null || renewLease) 
+        //        opcServer = new OpcServer();
+
+        //    int rtc = 0;
+            
+        //    bool isConnected = false;
+        //    bool isServerRunning = true;
+
+        //    lock (opcConLock)
+        //    {
+
+        //        do
+        //        {
+        //            try
+        //            {
+        //                isConnected = opcServer.isConnectedDA;
+        //                if (isConnected)
+        //                {
+        //                    opcServer.GetStatus(out objSERVERSTATUS);
+        //                    isServerRunning = objSERVERSTATUS.eServerState == OpcServerState.Running;
+
+        //                }
+
+
+        //                if (!isConnected || !isServerRunning)
+        //                {
+        //                    opcMachineHost = GlobalValues.OPC_MACHINE_HOST;
+        //                    opcServerName = GlobalValues.OPC_SERVER_NAME;
+        //                    rtc = opcServer.Connect(opcMachineHost, opcServerName);
+        //                    if (!isServerRunning && IsOPCServerIsRunning())
+        //                        new InitializeEngine().AsynchReadSettings();
+
+        //                }
+
+
+        //            }
+        //            catch (Exception errMsg)
+        //            {
+                        
+        //                Logger.WriteLogger(GlobalValues.PARKING_LOG, "GetOPCServerConnection(catch) : errMsg = " + errMsg);
+        //            }
+        //            finally { }
+
+        //        } while (opcServer.isConnectedDA == false);
+        //    }
+
+
+
+        //    return opcServer;
+
+
+
+        //}
         static bool IsOPCServerIsRunning()
         {
             bool isRunning = false;

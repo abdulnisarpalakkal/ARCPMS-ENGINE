@@ -795,3 +795,16 @@ D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Release\Opc
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Release\Oracle.DataAccess.dll
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Release\OpcDaNet.xml
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.CopyComplete
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.exe.config
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.exe
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.pdb
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.exe
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\bin\Release\ARCPMS ENGINE.pdb
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\bin\Release\OpcDaNet.dll
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\bin\Release\OpcDaNet.xml
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csprojResolveAssemblyReference.cache
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.AuthenticationForm.resources
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Index.resources
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.OperationConfirm.resources
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Properties.Resources.resources
+C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.GenerateResource.Cache
