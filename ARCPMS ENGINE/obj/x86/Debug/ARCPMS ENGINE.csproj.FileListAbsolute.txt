@@ -143,3 +143,19 @@ D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 28Oct7\ARCPMS ENGINE\obj\x
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 28Oct7\ARCPMS ENGINE\obj\x86\Debug\ARCPMS_ENGINE.OperationConfirm.resources
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 28Oct7\ARCPMS ENGINE\obj\x86\Debug\ARCPMS_ENGINE.Properties.Resources.resources
 D:\Projects\MRS\EFT\Code\Engine\New Version\engine on 28Oct7\ARCPMS ENGINE\obj\x86\Debug\ARCPMS ENGINE.csproj.GenerateResource.Cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Debug\ARCPMS ENGINE.exe.config
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Debug\ARCPMS ENGINE.exe
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Debug\ARCPMS ENGINE.pdb
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Debug\OpcDaNet.dll
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Debug\Oracle.DataAccess.dll
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\bin\Debug\OpcDaNet.xml
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS_ENGINE.AuthenticationForm.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS_ENGINE.Index.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS_ENGINE.OperationConfirm.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS_ENGINE.Properties.Resources.resources
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS ENGINE.csproj.GenerateResource.cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS ENGINE.csproj.CoreCompileInputs.cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS ENGINE.csproj.CopyComplete
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS ENGINE.exe
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS ENGINE.pdb
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Debug\ARCPMS ENGINE.csprojAssemblyReference.cache

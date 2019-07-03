@@ -808,3 +808,4 @@ C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\A
 C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.OperationConfirm.resources
 C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS_ENGINE.Properties.Resources.resources
 C:\EFT ARCPS\shared files\Code\New Engine\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csproj.GenerateResource.Cache
+D:\Projects\MRS\EFT\Code\Engine\New Version\engine\ARCPMS ENGINE\obj\x86\Release\ARCPMS ENGINE.csprojAssemblyReference.cache

@@ -104,7 +104,7 @@ namespace ARCPMS_ENGINE.src.mrs
                 //checking opc server connection established or not
                 if (OnToDisplayMessage != null)  OnToDisplayMessage("Initialization.....", null);
                 OpcServer opc=null;
-                while (!OpcConnection.IsOpcServerConnectionAvailable())
+                while (OpcConnection.GetOPCServerConnection()==null)
                 {
                         if (OnToDisplayMessage != null) OnToDisplayMessage("OPC Initialization failed....." , null);
                         Thread.Sleep(1000);
