@@ -1023,12 +1023,13 @@ namespace ARCPMS_ENGINE.src.mrs.Modules.Machines.EES.Controller
             int error = objErrorControllerService.GetErrorCode(objEESData.machineChannel, objEESData.machineCode, OpcTags.EES_L2_ErrCode);
             if (error != 0)
             {
-                needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.ERROR, error.ToString(), objEESData.machineCode));
+                needToShowTrigger=true;
+                 objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.ERROR, error.ToString(), objEESData.machineCode));
             }
-            else if (!CheckEESHealthy(objEESData))
-            {
-                needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.TRIGGER, "", objEESData.machineCode));
-            }
+            //else if (!CheckEESHealthy(objEESData))
+            //{
+            //    needToShowTrigger = objErrorDaoService.UpdateTriggerActiveStatus(GetTriggerData(TriggerData.triggerCategory.TRIGGER, "", objEESData.machineCode));
+            //}
             if (!needToShowTrigger)
                 objErrorDaoService.RemoveTrigger(objEESData.machineCode);
             return needToShowTrigger;
