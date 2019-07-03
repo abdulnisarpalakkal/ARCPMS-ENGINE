@@ -26,7 +26,7 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
         static object lockOpcServer = new object();
         static object lockCamOpcServer = new object();
         static object opcConLock = new object();
-        static SERVERSTATUS objSERVERSTATUS = new SERVERSTATUS();
+        
 
         // public OpcServer opcServer { get; set; }
 
@@ -37,6 +37,7 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
             SERVERSTATUS objSERVERSTATUS = new SERVERSTATUS();
             bool isConnected = false;
             bool isServerRunning = true;
+
 
 
             try
@@ -67,13 +68,18 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
 
         public static OpcServer GetOPCServerConnection(bool renewLease = false)
         {
+           
+            bool serverRunning = false;
+            SERVERSTATUS objSERVERSTATUS = new SERVERSTATUS();
             try
             {
+                
+
                 if (!renewLease && opcServer != null && opcServer.isConnectedDA)
                 {
                     opcServer.GetStatus(out objSERVERSTATUS);
                     if (objSERVERSTATUS.eServerState == OpcServerState.Running)
-                        return opcServer;
+                        serverRunning = true;
                 }
             }
             catch(Exception errMsg)
@@ -82,53 +88,54 @@ namespace ARCPMS_ENGINE.src.mrs.OPCConnection.OPCConnectionImp
             }
 
 
-          
 
-            int rtc = 0;
-
-            bool isConnected = false;
-            bool isServerRunning = true;
-
-            lock (opcConLock)
+            if (!serverRunning)
             {
                 
-                do
+
+                lock (opcConLock)
                 {
-                    if (renewLease || opcServer == null)
-                        opcServer = new OpcServer();
-                    try
+                    int rtc = 0;
+
+                    bool isConnected = false;
+                    bool isServerRunning = true;
+                    do
                     {
-                        isConnected = opcServer.isConnectedDA;
-                        if (isConnected)
+                        if (renewLease || opcServer == null)
+                            opcServer = new OpcServer();
+                        try
                         {
-                            opcServer.GetStatus(out objSERVERSTATUS);
-                            isServerRunning = objSERVERSTATUS.eServerState == OpcServerState.Running;
+                            isConnected = opcServer.isConnectedDA;
+                            if (isConnected)
+                            {
+                                opcServer.GetStatus(out objSERVERSTATUS);
+                                isServerRunning = objSERVERSTATUS.eServerState == OpcServerState.Running;
+
+                            }
+
+
+                            if (!isConnected || !isServerRunning)
+                            {
+                                opcMachineHost = GlobalValues.OPC_MACHINE_HOST;
+                                opcServerName = GlobalValues.OPC_SERVER_NAME;
+                                rtc = opcServer.Connect(opcMachineHost, opcServerName);
+                                if (!isServerRunning && IsOPCServerIsRunning())
+                                    new InitializeEngine().AsynchReadSettings();
+
+                            }
+
 
                         }
-
-
-                        if (!isConnected || !isServerRunning)
+                        catch (Exception errMsg)
                         {
-                            opcMachineHost = GlobalValues.OPC_MACHINE_HOST;
-                            opcServerName = GlobalValues.OPC_SERVER_NAME;
-                            rtc = opcServer.Connect(opcMachineHost, opcServerName);
-                            if (!isServerRunning && IsOPCServerIsRunning())
-                                new InitializeEngine().AsynchReadSettings();
 
+                            Logger.WriteLogger(GlobalValues.PARKING_LOG, "GetOPCServerConnection(catch 2) : errMsg = " + errMsg);
                         }
+                        finally { }
 
-
-                    }
-                    catch (Exception errMsg)
-                    {
-
-                        Logger.WriteLogger(GlobalValues.PARKING_LOG, "GetOPCServerConnection(catch 2) : errMsg = " + errMsg);
-                    }
-                    finally { }
-
-                } while (opcServer.isConnectedDA == false);
+                    } while (opcServer.isConnectedDA == false);
+                }
             }
-
 
 
             return opcServer;
