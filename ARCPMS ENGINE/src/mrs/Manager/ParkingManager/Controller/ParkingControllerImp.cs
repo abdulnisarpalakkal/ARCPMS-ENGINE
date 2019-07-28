@@ -585,6 +585,7 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.ParkingManager.Controller
             int autoRefreshCnt = 0;
             int autoRefreshLmt = 20;
             int pmsMode = 0;
+            bool needToChangeMode = false;
             try
             {
 
@@ -1029,7 +1030,7 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.ParkingManager.Controller
                             objEESData = ConvertToEESData(pathDetails);
                             objErrorData = ConvertToErrorData(pathDetails);
                             objErrorControllerService.UpdateLiveCommandOfMachine(objErrorData);
-                            bool needToChangeMode = false;
+                            needToChangeMode = false;
                             if (pmsMode != 2)
                             {
 
@@ -1086,12 +1087,85 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.ParkingManager.Controller
                             objErrorControllerService.UpdateLiveCommandStatusOfMachine(objEESData.machineCode, true);
                             UpdateMachineBlockStatus(pathDetails.unblockMachine);
 
-                            if (pathDetails.cmd_val_in_number == GlobalValues.EESEntry
-                                && objEESControllerService.IsEESBlockedInDBForPMS(objEESData.machineCode))
+                            //if (pathDetails.cmd_val_in_number == GlobalValues.EESEntry
+                            //    && objEESControllerService.IsEESBlockedInDBForPMS(objEESData.machineCode))
+                            //{
+                            //    //release ees block for PMS which is blocked before giving payment done command
+                            //    objEESControllerService.UpdateMachineBlockStatusForPMS(objEESData.machineCode, false);
+                            //}
+                            break;
+                        #endregion
+                        #region EES_Mode_Back
+                        case OpcTags.EES_Mode_Back:
+
+                            pmsMode = objPalletManagerService.GetCurrentPMSMode();
+                            objEESData = null;
+                            objEESData = ConvertToEESData(pathDetails);
+                            objErrorData = ConvertToErrorData(pathDetails);
+                            objErrorControllerService.UpdateLiveCommandOfMachine(objErrorData);
+                            needToChangeMode = false;
+                            if (pmsMode != 2)
                             {
-                                //release ees block for PMS which is blocked before giving payment done command
-                                objEESControllerService.UpdateMachineBlockStatusForPMS(objEESData.machineCode, false);
+
+                                if (pathDetails.cmd_val_in_number == GlobalValues.EESExit)
+                                {
+                                    objEESData.eesMode = GlobalValues.EESExit;
+
+                                    bool isReady = false;
+                                    do
+                                    {
+                                        needToChangeMode = objEESControllerService.IsEESEntryInOPC(objEESData);
+                                        isReady = objEESControllerService.IsEESReadyForParkingChangeMode(objEESData);
+                                        if (objEESControllerService.IsEESDisabled(objEESData.machineCode))
+                                            break;
+                                        /**checking transaction deleted or not****/
+                                        objQueueControllerService.CancelIfRequested(pathDetails.queueId);
+                                        /******/
+                                        if (!isReady && needToChangeMode)
+                                            Thread.Sleep(500);
+                                    } while (!isReady && needToChangeMode);
+                                    if (needToChangeMode)
+                                        objEESData.isDone = objEESControllerService.ChangeMode(objEESData);
+
+
+                                }
+                                else if (pathDetails.cmd_val_in_number == GlobalValues.EESEntry)
+                                {
+                                    if (objEESControllerService.IsEESEntryInCurrentModeInDB(objEESData.machineCode))
+                                    {
+
+                                        objEESData.eesMode = GlobalValues.EESEntry;
+                                        Thread.Sleep(3000);
+                                        bool isReady = false;
+                                        do
+                                        {
+                                            needToChangeMode = !objEESControllerService.IsEESEntryInOPC(objEESData);
+                                            isReady = objEESControllerService.IsEESReadyForParkingChangeModeBack(objEESData);
+                                            /**checking transaction deleted or not****/
+                                            objQueueControllerService.CancelIfRequested(pathDetails.queueId);
+                                            /******/
+                                            if (!isReady && needToChangeMode)
+                                                Thread.Sleep(500);
+                                        } while (!isReady && needToChangeMode);
+                                        if (needToChangeMode)
+                                        {
+
+                                            objEESData.isDone = objEESControllerService.ChangeMode(objEESData);
+                                        }
+                                    }
+                                }
+
+
                             }
+                            objErrorControllerService.UpdateLiveCommandStatusOfMachine(objEESData.machineCode, true);
+                            UpdateMachineBlockStatus(pathDetails.unblockMachine);
+
+                            //if (pathDetails.cmd_val_in_number == GlobalValues.EESEntry
+                            //    && objEESControllerService.IsEESBlockedInDBForPMS(objEESData.machineCode))
+                            //{
+                            //    //release ees block for PMS which is blocked before giving payment done command
+                            //    objEESControllerService.UpdateMachineBlockStatusForPMS(objEESData.machineCode, false);
+                            //}
                             break;
                         #endregion
                         #region EES_Payment_Is_Done
@@ -1102,7 +1176,7 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.ParkingManager.Controller
                             objEESData = ConvertToEESData(pathDetails);
 
                             // block EES for PMS because In morning mode or normal mode, it may need to change back to morning mode
-                            objEESControllerService.UpdateMachineBlockStatusForPMS(objEESData.machineCode,true);
+                            //objEESControllerService.UpdateMachineBlockStatusForPMS(objEESData.machineCode,true);
 
                             objErrorData = ConvertToErrorData(pathDetails);
                      

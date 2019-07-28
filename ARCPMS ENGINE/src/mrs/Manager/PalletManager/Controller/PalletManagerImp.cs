@@ -185,6 +185,8 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
             if (objPalletDaoService == null) objPalletDaoService = new PalletDaoImp();
             if (objPSControllerService == null) objPSControllerService = new PSControllerImp();
             if (objEESControllerService == null) objEESControllerService = new EESControllerImp();
+            if (objErrorControllerService == null) objErrorControllerService = new ErrorControllerImp();
+            
             bool isEntry=false;
             bool isPalletPresent=false;
             bool needToFeedPallet = false;
@@ -223,7 +225,11 @@ namespace ARCPMS_ENGINE.src.mrs.Manager.PalletManager.Controller
                         needToFeedPallet = isEntry && !isPalletPresent;
                         if (!needToFeedPallet)
                             needToRemovePallet = !isEntry && isPalletPresent;
-                        if (!(needToRemovePallet || needToFeedPallet))
+                        ErrorData objErrorData= objErrorControllerService.GetLiveCommandOfMachine(objEESData.machineCode);
+
+                        if (!(needToRemovePallet || needToFeedPallet) 
+                            || objErrorData.command.Equals(OpcTags.EES_Payment_Is_Done) 
+                            || objErrorData.command.Equals(OpcTags.EES_Mode_Back))
                         {
                             ResetPriority(objEESData);
                             continue;

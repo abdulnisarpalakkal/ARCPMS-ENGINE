@@ -111,6 +111,7 @@ namespace ARCPMS_ENGINE.src.mrs.Global
                 
         public  const string EES_Sensors_Clear                                 = "EES_Sensors_Clear";
         public  const string EES_Mode                                          = "EES_Mode";
+        public const string EES_Mode_Back                                      = "EES_Mode_Back";
         public  const string EES_Car_Simulaton                                 = "Car_Simulaton";
         public  const string EES_Car_Ready_To_Get                              = "Car_Ready_To_Get";
                 
